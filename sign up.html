@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <title>Sign up page</title>
+    <style>
+        body>div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #container{
+            width: 30%;
+            height: 60%;
+            border: 2px solid red;
+        }
+        #container>h1{
+            text-align: center;
+        }
+        #signUpTab{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #loginSection{
+            text-align: center;
+        }
+        #loginSection a{
+            text-decoration: none;
+            font-size: large;
+        }
+        form label, form input{
+            padding: 10px;
+            /* border: 2px solid black; */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="container">
+            <h1>Sign-Up</h1>
+            <form action="" id="signUpTab">
+                <label for="">EMAIL</label>
+                <input type="email" placeholder="eg-abc@gmail.com" id="emailEntry">
+                <label for="">Phone number</label>
+                <input type="number" placeholder="eg-9585685848" id="phoneNumberEntry">
+                <label for="">Password</label>
+                <input type="password" placeholder="enter password" id="passwordEntry">
+                <input type="submit" value="Sign Up" id="signUpButton">
+            </form>
+            <div id="loginSection">
+                <p>If you alredy have an account click on login</p>
+                <button  ><a href="./login.html">Login</a> </button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector("#signUpTab").addEventListener("submit",signUpProcess);
+    const userDetails={};
+    function signUpProcess(){
+        event.preventDefault()
+        var userEmail=document.getElementById("emailEntry").value;
+        var userPhoneNumber=document.getElementById("phoneNumberEntry").value
+        var userpassword=document.getElementById("passwordEntry").value
+        console.log(typeof userPhoneNumber)
+        if(userEmail=="" || userPhoneNumber==""|| userpassword==""){
+            alert("Please Enter valid details");
+        }else{
+            userDetails.email=userEmail;
+            userDetails.phoneNumber=userPhoneNumber;
+            userDetails.password=userpassword;
+        var loginDetails=localStorage.getItem("userInfo");        
+        if(loginDetails==null){
+            loginDetails=[];
+           loginDetails.push(userDetails);
+           localStorage.setItem("userInfo", JSON.stringify(loginDetails));             
+        }else{
+            const localArr=JSON.parse(loginDetails);
+            // localArr.forEach(function(e){
+            //     if(e.email==userEmail){
+            //         alert("Please click on login");
+                  
+            //     }
+            // });
+            for(var i=0; i<localArr.length; i++)
+            {
+                if(localArr[i].email==userEmail || localArr[i].phoneNumber==userPhoneNumber){
+                    alert("User is exsit please login");
+                    window.location.href="./login.html";
+                    return;
+                }
+            }
+            localArr.push(userDetails);
+            localStorage.setItem("userInfo", JSON.stringify(localArr));                        
+        }
+        var e=localStorage.getItem("userInfo")
+        console.log(JSON.parse(e))
+        console.log(loginDetails);
+       window.location.href="./login.html";
+        }
+    }    
+</script>
+</html>

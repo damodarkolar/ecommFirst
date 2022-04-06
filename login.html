@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>login</title>
+    <style>
+        body>div{
+            display: flex;
+            justify-content: center;
+        }
+        #loginContainer{
+            display: flex;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            flex-direction: column;
+            width: 40%;
+            justify-content: center;
+        }
+        #loginContainer>form{
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="loginContainer">
+            <h1>Log-in</h1>
+            <form action="" id="loginForm">
+                <label for="">Email Id</label>
+                <input type="email" placeholder="Eg- abc@gmail.com" id="emailEntry">
+                <label for="">Password</label>
+                <input type="password" placeholder="Enter password" id="passwordEntry">
+                <input type="submit" id="logInButton" value="Log-in">
+            </form>
+           <button onclick="skipLogin()">Skip to Log-in</button>
+           <button onclick="signupnav()">Sign-Up</button>
+        </div>
+    </div>   
+</body>
+<script>
+    document.querySelector("#loginForm").addEventListener("submit", checkDetails);
+    function checkDetails(){
+        event.preventDefault();
+        let userEmail=document.querySelector("#emailEntry").value;
+        let userPassword=document.querySelector("#passwordEntry").value;
+        if(userEmail=="" || userPassword==""){
+            alert("Please Enter log-in details")
+        }else{
+            let userDetails=localStorage.getItem("userInfo");
+            console.log(userDetails==null)
+            if(userDetails==null){
+                alert("Please Sign-Up first");
+                window.location.href="./sign up.html";
+            }else{
+                let userDetailsArr=JSON.parse(userDetails);
+                for(var i=0; i<userDetailsArr.length; i++)
+                {
+                    if(userDetailsArr[i].email==userEmail){
+                        if(userDetailsArr[i].password==userPassword){
+                            alert("Log-in completed");
+                            window.location.href="./home.html";
+                            return;
+                        }else{
+                            alert("please enter valid password");
+
+                        }
+                    }
+                }
+                alert("Please Enter valid login Details");
+            }
+        }
+    }
+    function skipLogin(){
+        window.location.href="./home.html";
+    }
+    function signupnav(){
+        window.location.href="./sign up.html";
+    }
+</script>
+</html>
