@@ -49,10 +49,23 @@
             margin-left: 30px;
             margin-right: 30px;
         }
+        #totalProductsDiv{
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+            background-color: aqua;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 20px;
+        }        
     </style>
 </head>
 <body>
     <div id="container">
+        <div id="totalProductsDiv">
+            
+        </div>
         <div id="products">
 
         </div>
@@ -117,7 +130,6 @@
     pricediv.append(originalPrice,discountPrice);
     pricediv.setAttribute("class","pricediv");
     productDiv.append(imagediv,namediv,pricediv);
-
     document.querySelector("#products").append(productDiv)
         });
     }
@@ -142,6 +154,7 @@
         var discount=0;
         var total=0;
         var discountPrice=0;
+        var count=0;
        if(cartContents===null)
        {
         paymentdivCreator(price,discount,total,discountPrice)           
@@ -149,8 +162,19 @@
            cartContents.forEach(function(productElement){
                price+=+(productElement.strikedoffprice);
                discountPrice+=+(productElement.price); 
-                                     
+               count++;                                     
            });
+           var countdiv=document.createElement("div");
+           var countElement=document.createElement("p");
+           countElement.innerText="Total number of products "+count;
+           countdiv.append(countElement)
+
+           var totalHeadingdiv=document.createElement("div");
+           var totalHeadingElement=document.createElement("p");
+           totalHeadingElement.innerText="Total Amount = "+discountPrice;
+           totalHeadingdiv.append(totalHeadingElement);
+
+         document.querySelector("#totalProductsDiv").append(totalHeadingdiv,countdiv)
            paymentdivCreator(price,discount,total,discountPrice) ;               
        }
        
@@ -171,5 +195,6 @@
            }
        }
     }
+
 </script>
 </html>
