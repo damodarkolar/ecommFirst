@@ -42,7 +42,7 @@
             display: flex;
             justify-content: space-around;
         }
-        #paymentpricediv,#discountdiv,#totaldiv{
+        #paymentpricediv,#discountdiv,#totaldiv,#promodiv{
             display: flex;
             justify-content: space-between;
             box-sizing: border-box;
@@ -133,31 +133,46 @@
     document.querySelector("#products").append(productDiv)
         });
     }
-
+    
     function paymentDetails(){
         var paymentpricediv=document.createElement("div");
         paymentpricediv.setAttribute("id","paymentpricediv");
         var discountdiv=document.createElement("div");
         discountdiv.setAttribute("id","discountdiv")
         var totaldiv=document.createElement("div");
-        totaldiv.setAttribute("id","totaldiv")
+        totaldiv.setAttribute("id","totaldiv");
+        var promodiv=document.createElement("div");
+        promodiv.setAttribute("id","promodiv");
         var priceElement=document.createElement("p");
         var discountElement=document.createElement("p");
         var totalElement=document.createElement("p");
+        var promoElement=document.createElement("p");
         var p=document.createElement("p");
         var d=document.createElement("p");
         var t=document.createElement("p");
+        var pro=document.createElement("p");
+        var promoCodediv=document.createElement("div");
+        promoCodediv.setAttribute("id","promoCodediv");
+        var promoCode=document.createElement("input");
+        var promoCodebutton=document.createElement("button");
+        promoCodebutton.setAttribute("id","promoCodebutton");
+        promoCodebutton.innerText="apply";
+        promoCode.setAttribute("id","promoCode")
+        promoCode.setAttribute("placeholder","promo code");
+        promoCodediv.append(promoCode,promoCodebutton);
         p.innerText="Price";
         d.innerText="Discount";
         t.innerText="Total";
+        pro.innerText="Promo Discount"
         var price=0;
         var discount=0;
         var total=0;
         var discountPrice=0;
         var count=0;
+        var promoDicount=0;
        if(cartContents===null)
        {
-        paymentdivCreator(price,discount,total,discountPrice)           
+        paymentdivCreator(price,discount,total,discountPrice,promoDicount)           
        }  else{
            cartContents.forEach(function(productElement){
                price+=+(productElement.strikedoffprice);
@@ -175,18 +190,34 @@
            totalHeadingdiv.append(totalHeadingElement);
 
          document.querySelector("#totalProductsDiv").append(totalHeadingdiv,countdiv)
-           paymentdivCreator(price,discount,total,discountPrice) ;               
+           paymentdivCreator(price,discount,total,discountPrice,promoDicount) ;               
        }
        
-       function paymentdivCreator(price,discount,total,discountPrice){
+       document.querySelector("#promoCodebutton").addEventListener("click",promoapplyevent);
+       function promoapplyevent(){
+        promoDicount=promocodeapply();
+       }
+       function promocodeapply(){
+           var promoCodeinput=document.querySelector("#promoCode").value;
+           if(promoCodeinput=="masai30"){
+            promoDicount=Math.floor(discountPrice*0.3);
+           }else{
+               alert("apply valid promo code")
+           }
+           return promoDicount;
+       }
+       function paymentdivCreator(price,discount,total,discountPrice,promoDicount){
            discount=price-discountPrice;
+           discountPrice=discountPrice-promoDicount;           
         priceElement.innerText=price+"/-";
         paymentpricediv.append(p,priceElement);
            discountElement.innerText=discount+"/-";
            discountdiv.append(d,discountElement);
            totalElement.innerText=discountPrice+"/-";
            totaldiv.append(t,totalElement);
-           document.querySelector("#paymentDetails").append(paymentpricediv,discountdiv,totaldiv);
+           promoElement.innerText=promoDicount+"/-";
+           promodiv.append(pro,promoCodediv,promoElement);
+           document.querySelector("#paymentDetails").append(paymentpricediv,discountdiv,promodiv,totaldiv);
            var finalAmount=discountPrice;
            if(localStorage.getItem("finalAmount")===null){
                localStorage.setItem("finalAmount",finalAmount);
