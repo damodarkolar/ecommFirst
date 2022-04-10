@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+    <title>otp page</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Bank Name</h1>
+        <h3>Please Enter Otp </h3>
+            <input type="number" placeholder="OTP" id="otpEntry">
+           <button onclick="submitFunction()">Submit</button> 
+           <button onclick="cancelFunction()"> Cancel</button>         
+    </div>
+</body>
+<script>
+    function submitFunction(){
+       let userOtp=document.querySelector("#otpEntry").value;
+       if(userOtp=="1234"){
+           alert("Pyment Completed");
+           window.location.href="./home.html";
+       }
+    }
+    function cancelFunction(){
+        window.location.href="./cart.html";        
+    }
+</script>
+</html>

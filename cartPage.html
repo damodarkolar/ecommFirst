@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>cart page</title>
+    <style>
+        #container{
+            display: grid;
+            flex-direction: column;
+        }
+        #paynowbutton{
+            width: 98%;
+            margin: auto;
+            height: 50px;
+            background-color: bisque;
+            border-radius: 10px;
+            font-size: 30px;
+        }
+        #products{
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+       .box{
+           display: flex;
+           flex-direction: column;
+            border: 2px solid red;
+        }
+        #paymentDetails{
+            display: flex;
+            flex-direction: column;
+            background-color: blue;
+            text-decoration: bold;
+            font-size: 25px;
+            color: white;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .pricediv{
+            display: flex;
+            justify-content: space-around;
+        }
+        #paymentpricediv,#discountdiv,#totaldiv{
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="products">
+
+        </div>
+        <div id="paymentDetails">
+
+        </div>
+        <div id="payment">
+            <button id="paynowbutton"> Pay Now</button>
+        </div>
+    </div>    
+</body>
+<script>
+    document.querySelector("#paynowbutton").addEventListener("click",paymentpageconnector)
+    function paymentpageconnector(){
+        window.location.href="./paymentPage.html"
+    }
+    var cartContents;
+    if(JSON.parse(localStorage.getItem("cartData"))===null){
+        cartContents=[];
+        var emptyCart=document.createElement("h1");
+        emptyCart.innerText="Cart is Empty";
+        document.querySelector("#products").append(emptyCart);
+    }
+    else{
+        cartContents=JSON.parse(localStorage.getItem("cartData"));
+    }
+    
+    window.addEventListener("load",newcart);
+
+    function newcart(){
+        cartCreator()
+        paymentDetails();
+    }
+    function cartCreator(){
+        cartContents.forEach(function(element) {
+            var productDiv=document.createElement("div");
+            productDiv.setAttribute("class","box");
+        var imagediv=document.createElement("div");
+        var namediv=document.createElement("div");
+        var pricediv=document.createElement("div");
+        var buttondiv=document.createElement("div");
+
+    var image=document.createElement("img");
+    image.src=element.image_url;
+    imagediv.append(image);
+    imagediv.setAttribute("class","imagediv");
+    
+    var name=document.createElement("h3");
+    name.innerText=element.name;    
+    namediv.append(name);
+    namediv.setAttribute("class","namediv");
+    
+
+    var originalPrice=document.createElement("p");
+    originalPrice.innerText="Rs-"+element.strikedoffprice;
+    originalPrice.setAttribute("class","originalPrice");
+
+    var discountPrice=document.createElement("p");
+    discountPrice="Rs-"+element.price;
+
+
+    pricediv.append(originalPrice,discountPrice);
+    pricediv.setAttribute("class","pricediv");
+    productDiv.append(imagediv,namediv,pricediv);
+
+    document.querySelector("#products").append(productDiv)
+        });
+    }
+
+    function paymentDetails(){
+        var paymentpricediv=document.createElement("div");
+        paymentpricediv.setAttribute("id","paymentpricediv");
+        var discountdiv=document.createElement("div");
+        discountdiv.setAttribute("id","discountdiv")
+        var totaldiv=document.createElement("div");
+        totaldiv.setAttribute("id","totaldiv")
+        var priceElement=document.createElement("p");
+        var discountElement=document.createElement("p");
+        var totalElement=document.createElement("p");
+        var p=document.createElement("p");
+        var d=document.createElement("p");
+        var t=document.createElement("p");
+        p.innerText="Price";
+        d.innerText="Discount";
+        t.innerText="Total";
+        var price=0;
+        var discount=0;
+        var total=0;
+        var discountPrice=0;
+       if(cartContents===null)
+       {
+        paymentdivCreator(price,discount,total,discountPrice)           
+       }  else{
+           cartContents.forEach(function(productElement){
+               price+=+(productElement.strikedoffprice);
+               discountPrice+=+(productElement.price); 
+                                     
+           });
+           paymentdivCreator(price,discount,total,discountPrice) ;               
+       }
+       
+       function paymentdivCreator(price,discount,total,discountPrice){
+           discount=price-discountPrice;
+        priceElement.innerText=price+"/-";
+        paymentpricediv.append(p,priceElement);
+           discountElement.innerText=discount+"/-";
+           discountdiv.append(d,discountElement);
+           totalElement.innerText=discountPrice+"/-";
+           totaldiv.append(t,totalElement);
+           document.querySelector("#paymentDetails").append(paymentpricediv,discountdiv,totaldiv);
+           var finalAmount=discountPrice;
+           if(localStorage.getItem("finalAmount")===null){
+               localStorage.setItem("finalAmount",finalAmount);
+           }else{
+            localStorage.setItem("finalAmount",finalAmount);
+           }
+       }
+    }
+</script>
+</html>

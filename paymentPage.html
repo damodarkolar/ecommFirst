@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Payment page</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #container{
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            height: 360px;
+            margin: 10px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+        #container>div{
+            margin: 5px;
+            width: 230px;
+        }
+        #container>#expDate{
+            display: flex;
+            justify-content: space-between;
+        }
+        #expDate>input{
+            width: 32%;
+        }
+        #cardNumber{
+            width: 90%;
+        }
+        #nameonCard>input{
+            width: 230px;
+        }
+        #makePayment>button{
+            max-width: 230px;
+        }
+        #totalPayment{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="totalPayment"> </div>
+        <div id="cardNumber"><input type="number" placeholder="Enter card number" value=""></div>
+        <div id="expDate">
+            <select name="" id="expMonth">
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <input id="expYear" type="number" placeholder="YYYY">
+            <input type="number" placeholder="CVV" id="cvv">
+        </div>
+        <div id="nameonCard"><input type="text" placeholder="Name on the card"></div>
+        <div id="makePayment"><button id="makePaymentButton" onclick="cardValidation()">Make Payment</button></div>        
+    </div>
+</body>
+<script>
+    var cardNum=document.querySelector("#cardNumber").value;
+    console.log(document.querySelector("#cardNumber").innerHTML)
+    var expMonth=document.queryCommandValue("#expMonth").value;
+    var expYear=document.querySelector("#expYear").value;
+    var nameOnCard=document.querySelector("#nameonCard").value;
+    var Cardcvv=document.querySelector("#cvv").value;
+    function cardValidation(){
+        event.preventDefault();
+    if(document.querySelector("#cardNumber").value.length.length==1){
+    }else{
+        alert("error");
+    }
+    }
+    window.addEventListener("load",finalamount);
+    function finalamount(){
+        var totalAmount;
+    if(localStorage.getItem("finalAmount")===null){
+        alert("Please add the Items in the cart")
+        window.location.href="./home.html";
+    }else{
+        totalamount=localStorage.getItem("finalAmount");
+        var headingElement=document.createElement("h2");
+        headingElement.innerText='Toatal amount='+totalamount+"/-";
+        document.querySelector("#totalPayment").append(headingElement)
+    }
+    }
+    
+</script>
+</html>

@@ -18,16 +18,55 @@
         #navbar a:hover{
             color: rgb(171, 218, 69);
         }
+        #naviagationPage{
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+            box-sizing: border-box;
+        }
+        #naviagationPage>div{
+            width: 300px;
+            height: 400px;
+            border: 2px solid teal;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+        }
+        #naviagationPage>div>img{
+            width: 100%;
+            height: 80%;
+            border-radius: 10px;
+        } 
+        h1{
+            text-decoration: none;
+        }       
     </style>
 </head>
 <body>
     <div id="container">
         <div id="navbar">
+            <a href="./home.html">Home</a>            
             <a href="./men.html">Mens</a>
             <a href="./women.html">Womens</a>
             <a href="./kids.html">Kids</a>
             <a href="./login.html">Login</a>
             <a href="./sign up.html">Sign Up</a>
+            <a href="./cartPage.html"> Cart</a>
+        </div>
+        <div id="naviagationPage">
+            <div id="menpage">
+                <img src="https://m.media-amazon.com/images/I/31NESKfISEL._AC_SY200_.jpg" alt="menpage">
+                <a href="./men.html"> <h1>Mens Page</h1></a>
+            </div>
+            <div id="womenpage">
+                <img src="https://images-eu.ssl-images-amazon.com/images/G/31/img2020/img21/apparelGW/WRS_DEC_21/PC/1x/WRS-GW-PC-QC_02._SY116_CB651157265_.jpg" alt="womenpage">
+                <a href="./women.html"> <h1>Womens Page</h1></a>                
+            </div>
+            <div id="kidspage">
+                <img src="https://m.media-amazon.com/images/I/7158XpI9iXL._AC_UL480_FMwebp_QL65_.jpg" alt="kidspage">
+                <a href="./kids.html"> <h1>Kids Page</h1></a>
+            </div>
         </div>
     </div>    
 </body>
