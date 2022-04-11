@@ -59,6 +59,22 @@
             padding: 10px;
             font-size: 20px;
         }        
+        #promoCodebutton{
+            background-color: grey;  
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            border: 2px solid rgb(194, 40, 40);
+            margin: 5px;
+            box-sizing: border-box;
+            font-size: large;
+        }
+        #promoCodediv>input{
+            height: 30px;
+            border-radius: 10px;
+            background-color: beige;
+            width: 200px;
+        }       
     </style>
 </head>
 <body>
@@ -201,10 +217,12 @@
            var promoCodeinput=document.querySelector("#promoCode").value;
            if(promoCodeinput=="masai30"){
             promoDicount=Math.floor(discountPrice*0.3);
+            alert("promo dicount "+promoDicount+"/-  applied Sucessfully")
            }else{
-               alert("apply valid promo code")
+               alert("apply valid promo code");
+               promoDicount=0;
            }
-           return promoDicount;
+           paymentdivCreator(price,discount,total,discountPrice,promoDicount)
        }
        function paymentdivCreator(price,discount,total,discountPrice,promoDicount){
            discount=price-discountPrice;
@@ -226,6 +244,5 @@
            }
        }
     }
-
 </script>
 </html>
