@@ -44,9 +44,10 @@
 <body>
     <div id="container">
         <div id="totalPayment"> </div>
-        <div id="cardNumber"><input type="number" placeholder="Enter card number" value=""></div>
-        <div id="expDate">
-            <select name="" id="expMonth">
+        <form action=""id="cardDetailsEntry">
+            <input type="number" placeholder="Card Number" id="cardNumber">
+            <select name="" id="cardMonth">
+                <option value="null">Select</option>
                 <option value="01">01</option>
                 <option value="02">02</option>
                 <option value="03">03</option>
@@ -60,28 +61,37 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
             </select>
-            <input id="expYear" type="number" placeholder="YYYY">
-            <input type="number" placeholder="CVV" id="cvv">
-        </div>
-        <div id="nameonCard"><input type="text" placeholder="Name on the card"></div>
-        <div id="makePayment"><button id="makePaymentButton" onclick="cardValidation()">Make Payment</button></div>        
+            <input type="number" name="" id="expYear" placeholder="YYYY">
+            <input type="number" placeholder="CVV" id="cardCvv">
+            <input type="text" id="nameOnTheCard" placeholder="Name on the card">
+            <input type="submit" value="Pay Now">
+        </form>       
     </div>
 </body>
 <script>
-    var cardNum=document.querySelector("#cardNumber").value;
-    console.log(document.querySelector("#cardNumber").innerHTML)
-    var expMonth=document.queryCommandValue("#expMonth").value;
-    var expYear=document.querySelector("#expYear").value;
-    var nameOnCard=document.querySelector("#nameonCard").value;
-    var Cardcvv=document.querySelector("#cvv").value;
+     window.addEventListener("load",finalamount);
+     document.querySelector("#cardDetailsEntry").addEventListener("submit",cardValidation);     
+
+
     function cardValidation(){
         event.preventDefault();
-    if(document.querySelector("#cardNumber").value.length.length==1){
-    }else{
-        alert("error");
+        var cardNumberValue=document.querySelector("#cardNumber").value;
+        var cardMonthValue=document.querySelector("#cardMonth").value;
+        var cardYearvValue=document.querySelector("#expYear").value;
+        var cardCvvValue=document.querySelector("#cardCvv").value;
+        var cardNamevalue=document.querySelector("#nameOnTheCard").value;
+
+        if(cardNumberValue.length===16 && cardMonthValue.length===2 && cardCvvValue.length===3 && +cardYearvValue>=2022 && cardNamevalue !=""){
+            window.location.href="./otp.html";
+        }
+        else{
+            alert("Error");
+        }        
     }
-    }
-    window.addEventListener("load",finalamount);
+        
+
+
+   
     function finalamount(){
         var totalAmount;
     if(localStorage.getItem("finalAmount")===null){
